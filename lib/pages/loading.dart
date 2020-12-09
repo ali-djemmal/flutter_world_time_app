@@ -15,7 +15,7 @@ class _LoadingState extends State<Loading> {
 
 
   void setWorldTime() async{
-    WorldTime worldTime = WorldTime(location: 'Algiers',flag: 'algeria.png',url: 'Africa/Algiers');
+    WorldTime worldTime = WorldTime(url: 'Africa/Algiers',location: 'Algiers',flag: 'algeria.png');
     await worldTime.getTime();
     /*setState(() {
       time= worldTime.time;

@@ -10,11 +10,11 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    data = ModalRoute.of(context).settings.arguments;
+    data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
     print(data);
     // set background    ddd
     String bgImage= data['isDayTime'] ? 'assets/day.png': 'assets/night.png';
-    Color bgColor = data['isDayTime'] ? Colors.blue : Colors.indigo[700];
+    Color bgColor = data['isDayTime'] ? Colors.lightBlue[100] : Colors.grey[700];
     return Scaffold(
       backgroundColor: bgColor,
       body: SafeArea(child: Container(
@@ -24,15 +24,25 @@ class _HomeState extends State<Home> {
 
         ),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(0.0, 100.0, 0, 0),
+          padding: const EdgeInsets.fromLTRB(0.0, 350.0, 0, 0),
           child: Column(
             children: <Widget>[
               FlatButton.icon(
-                  onPressed:() {
-                    Navigator.pushNamed(context, '/location');
+                  onPressed:() async {
+                  dynamic result = await  Navigator.pushNamed(context, '/location');
+                  setState(() {
+                    data={
+                      'location': result['location'],
+                      'time':result['time'],
+                      'flag':result['flag'],
+                      'isDayTime': result['isDayTime']
+                    };
+                  });
                   },
                   icon: Icon(Icons.edit_location,color: Colors.grey[300],),
-                  label: Text('Edit location',style: TextStyle(color: Colors.grey[300]),)),
+                  label: Text('Edit location',style: TextStyle(color: Colors.grey[300]),
+                  )
+              ),
               SizedBox(height: 20.0,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
